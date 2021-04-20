@@ -6,7 +6,7 @@ const processPath = process.cwd();
 
 const SRC_PATH = path.resolve(processPath, 'src');
 const DIST_PATH = path.resolve(processPath, 'dist');
-const PKG_JSON_FILE = path.resolve(SRC_PATH, 'package.json');
+const PKG_JSON_FILE = path.resolve(processPath, 'package.json');
 
 const {
   name: packageName,
@@ -17,7 +17,7 @@ const {
   exposes,
 // eslint-disable-next-line import/no-dynamic-require
 } = require(PKG_JSON_FILE);
-const ENTRY_FILE = path.resolve(SRC_PATH, entryFileName);
+const ENTRY_FILE_PATH = path.resolve(SRC_PATH, entryFileName);
 
 /**
  * Camelize given string
@@ -34,14 +34,14 @@ const PACKAGE_NAME = camelize(packageName);
 
 module.exports = {
   context: SRC_PATH,
-  entry: ENTRY_FILE,
+  entry: ENTRY_FILE_PATH,
   mode: environment,
   resolve: {
     extensions: ['.jsx', '.js', '.json'],
   },
   output: {
     path: DIST_PATH,
-    filename: ENTRY_FILE,
+    filename: entryFileName,
   },
   module: {
     rules: [
@@ -51,7 +51,7 @@ module.exports = {
       },
       {
         test: /\.jsx?$/,
-        include: path.resolve(__dirname, 'src'),
+        include: [SRC_PATH],
         exclude: /node_modules/,
         loader: 'babel-loader',
         options: {
