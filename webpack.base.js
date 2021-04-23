@@ -11,6 +11,7 @@ const PKG_JSON_FILE = path.resolve(processPath, 'package.json');
 const {
   name: packageName,
   main: entryFileName,
+  fonts: fontConfig,
   environment = 'development',
   shared,
   remotes,
@@ -32,7 +33,32 @@ const camelize = (str) => (
 );
 const PACKAGE_NAME = camelize(packageName);
 
-module.exports = {
+const rules = {
+  css: {
+    test: /\.css$/i,
+    use: ['style-loader', 'css-loader'],
+  },
+  jsx: {
+    test: /\.jsx?$/,
+    include: [SRC_PATH],
+    exclude: /node_modules/,
+    loader: 'babel-loader',
+    options: {
+      presets: ['@babel/preset-env', '@babel/preset-react'],
+    },
+  },
+  fonts: {
+    test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+    loader: 'file-loader',
+    include: fontConfig?.include || 'public/fonts',
+    options: {
+      name: '[name].[ext]',
+      outputPath: fontConfig?.outputPath || 'public/fonts',
+    },
+  },
+};
+
+const webpackConfig = {
   context: SRC_PATH,
   entry: ENTRY_FILE_PATH,
   mode: environment,
@@ -45,27 +71,8 @@ module.exports = {
   },
   module: {
     rules: [
-      {
-        test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
-      },
-      {
-        test: /\.jsx?$/,
-        include: [SRC_PATH],
-        exclude: /node_modules/,
-        loader: 'babel-loader',
-        options: {
-          presets: ['@babel/preset-env', '@babel/preset-react'],
-        },
-      },
-      {
-        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'file-loader',
-        options: {
-          name: '[name].[ext]',
-          outputPath: 'public/fonts/',
-        },
-      },
+      rules.css,
+      rules.jsx,
     ],
   },
   plugins: [
@@ -82,3 +89,9 @@ module.exports = {
     }),
   ],
 };
+
+if (fontConfig) {
+  webpackConfig.module.rules = [...webpackConfig.module.rules, rules.fonts];
+}
+
+module.exports = webpackConfig;

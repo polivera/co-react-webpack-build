@@ -1,6 +1,6 @@
 {
   "name": "co-react-webpack-build",
-  "version": "1.0.0-rc4",
+  "version": "1.0.0-rc8",
   "description": "Webpack configuration for React apps",
   "main": "index.js",
   "scripts": {
@@ -18,6 +18,7 @@
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.0.0",
     "prettier": "^2.2.1",
+    "shelljs": "^0.8.4",
     "style-loader": "^2.0.0",
     "webpack": "^5.21.2",
     "webpack-cli": "^4.5.0",
@@ -31,5 +32,8 @@
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.2.0"
+  },
+  "bin": {
+    "dev-server": "bin/run-dev-server.js"
   }
 }
