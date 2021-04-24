@@ -12,7 +12,7 @@ const {
   name: packageName,
   main: entryFileName,
   fonts: fontConfig,
-  environment = 'development',
+  port = 9000,
   shared,
   remotes,
   exposes,
@@ -61,7 +61,9 @@ const rules = {
 const webpackConfig = {
   context: SRC_PATH,
   entry: ENTRY_FILE_PATH,
-  mode: environment,
+  devServer: {
+    port,
+  },
   resolve: {
     extensions: ['.jsx', '.js', '.json'],
   },
