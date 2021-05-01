@@ -97,4 +97,4 @@ if (fontConfig) {
   webpackConfig.module.rules = [...webpackConfig.module.rules, rules.fonts];
 }
 
-export default webpackConfig;
+module.exports = webpackConfig;
