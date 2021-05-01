@@ -1,9 +1,7 @@
-import { resolve as _resolve } from 'path';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
+const { _resolve } = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { ModuleFederationPlugin } = require('webpack').container;
 
-import { container } from 'webpack';
-
-const { ModuleFederationPlugin } = container;
 const processPath = process.cwd();
 
 const SRC_PATH = _resolve(processPath, 'src');
