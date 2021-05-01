@@ -1,13 +1,13 @@
-const { _resolve } = require('path');
+const { resolve } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { ModuleFederationPlugin } = require('webpack').container;
 
 const processPath = process.cwd();
 
-const SRC_PATH = _resolve(processPath, 'src');
-const DIST_PATH = _resolve(processPath, 'dist');
-const PKG_JSON_FILE = _resolve(processPath, 'package.json');
-const PUBLIC_PATH = _resolve(SRC_PATH, 'public');
+const SRC_PATH = resolve(processPath, 'src');
+const DIST_PATH = resolve(processPath, 'dist');
+const PKG_JSON_FILE = resolve(processPath, 'package.json');
+const PUBLIC_PATH = resolve(SRC_PATH, 'public');
 
 const {
   name: packageName,
@@ -19,7 +19,7 @@ const {
   exposes,
 // eslint-disable-next-line import/no-dynamic-require
 } = require(PKG_JSON_FILE);
-const ENTRY_FILE_PATH = _resolve(SRC_PATH, entryFileName);
+const ENTRY_FILE_PATH = resolve(SRC_PATH, entryFileName);
 
 /**
  * Camelize given string
@@ -51,10 +51,10 @@ const rules = {
   fonts: {
     test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
     loader: 'file-loader',
-    include: fontConfig?.include || _resolve(PUBLIC_PATH, 'fonts'),
+    include: fontConfig?.include || resolve(PUBLIC_PATH, 'fonts'),
     options: {
       name: '[name].[ext]',
-      outputPath: fontConfig?.outputPath || _resolve(PUBLIC_PATH, 'fonts'),
+      outputPath: fontConfig?.outputPath || resolve(PUBLIC_PATH, 'fonts'),
     },
   },
 };
@@ -80,7 +80,7 @@ const webpackConfig = {
   },
   plugins: [
     new HtmlWebpackPlugin(
-      { template: _resolve(PUBLIC_PATH, 'index.html') },
+      { template: resolve(PUBLIC_PATH, 'index.html') },
     ),
     new ModuleFederationPlugin({
       name: PACKAGE_NAME,
