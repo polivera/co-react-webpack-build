@@ -13,6 +13,7 @@ const {
   name: packageName,
   main: entryFileName,
   fonts: fontConfig,
+  host = 'localhost',
   port = 9000,
   shared,
   remotes,
@@ -67,6 +68,7 @@ const webpackConfig = {
   context: SRC_PATH,
   entry: ENTRY_FILE_PATH,
   devServer: {
+    host,
     port,
   },
   resolve: {
