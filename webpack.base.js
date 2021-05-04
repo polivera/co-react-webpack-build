@@ -51,10 +51,14 @@ const rules = {
   fonts: {
     test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
     loader: 'file-loader',
-    include: fontConfig?.include || resolve(PUBLIC_PATH, 'fonts'),
+    include: fontConfig?.include
+      ? resolve(processPath, fontConfig.include)
+      : resolve(PUBLIC_PATH, 'fonts'),
     options: {
       name: '[name].[ext]',
-      outputPath: fontConfig?.outputPath || resolve(PUBLIC_PATH, 'fonts'),
+      outputPath: fontConfig?.outputPath
+        ? resolve(processPath, fontConfig.outputPath)
+        : 'dist/public',
     },
   },
 };

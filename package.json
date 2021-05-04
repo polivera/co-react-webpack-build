@@ -2,7 +2,6 @@
   "name": "co-react-webpack-build",
   "version": "1.0.4",
   "description": "Webpack configuration for React apps",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,8 +9,8 @@
   "author": "Pablo Olivera <p.oliverav@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "@babel/core": "^7.13.16",
-    "@babel/preset-env": "^7.13.15",
+    "@babel/core": "^7.14.0",
+    "@babel/preset-env": "^7.14.0",
     "@babel/preset-react": "^7.13.13",
     "babel-loader": "^8.2.2",
     "css-loader": "^5.2.4",
