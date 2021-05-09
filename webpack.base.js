@@ -18,7 +18,8 @@ const {
   shared,
   remotes,
   exposes,
-// eslint-disable-next-line import/no-dynamic-require
+  dependencies: deps,
+  // eslint-disable-next-line import/no-dynamic-require
 } = require(PKG_JSON_FILE);
 const ENTRY_FILE_PATH = resolve(SRC_PATH, entryFileName);
 
@@ -27,13 +28,22 @@ const ENTRY_FILE_PATH = resolve(SRC_PATH, entryFileName);
  * @returns string
  * @param str string
  */
-const camelize = (str) => (
+const camelize = (str) =>
   str.replace(/(?:^\w|[A-Z]|-|\b\w|\s+)/g, (match, index) => {
     if (match === ' ' || match === '-') return '';
-    return (index === 0) ? match.toLowerCase() : match.toUpperCase();
-  })
-);
+    return index === 0 ? match.toLowerCase() : match.toUpperCase();
+  });
 const PACKAGE_NAME = camelize(packageName);
+
+/**
+ * Add version to the shared libraries based on your dependencies
+ */
+const sharedWithVersions = Object.fromEntries(
+  Object.entries(shared).map(([depName, depData]) => [
+    depName,
+    { ...depData, requiredVersion: deps[depName] },
+  ])
+);
 
 const rules = {
   css: {
@@ -79,21 +89,16 @@ const webpackConfig = {
     filename: entryFileName,
   },
   module: {
-    rules: [
-      rules.css,
-      rules.jsx,
-    ],
+    rules: [rules.css, rules.jsx],
   },
   plugins: [
-    new HtmlWebpackPlugin(
-      { template: resolve(PUBLIC_PATH, 'index.html') },
-    ),
+    new HtmlWebpackPlugin({ template: resolve(PUBLIC_PATH, 'index.html') }),
     new ModuleFederationPlugin({
       name: PACKAGE_NAME,
       library: { type: 'var', name: PACKAGE_NAME },
       filename: 'remoteEntry.js',
       exposes,
-      shared,
+      shared: sharedWithVersions,
       remotes,
     }),
   ],

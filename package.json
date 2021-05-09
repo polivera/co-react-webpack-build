@@ -33,6 +33,9 @@
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.2.0"
   },
+  "prettier": {
+    "singleQuote": true
+  },
   "bin": {
     "dev-server": "bin/run-dev-server.js",
     "prod-server": "bin/run-prod-server.js"
