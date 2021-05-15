@@ -15,9 +15,9 @@ const {
   fonts: fontConfig,
   host = 'localhost',
   port = 9000,
-  shared,
-  remotes,
-  exposes,
+  shared = [],
+  remotes = [],
+  exposes = [],
   dependencies: deps,
   // eslint-disable-next-line import/no-dynamic-require
 } = require(PKG_JSON_FILE);
@@ -29,7 +29,7 @@ const ENTRY_FILE_PATH = resolve(SRC_PATH, entryFileName);
  * @param str string
  */
 const camelize = (str) =>
-  str.replace(/(?:^\w|[A-Z]|-|\b\w|\s+)/g, (match, index) => {
+  str.replace(/^\w|[A-Z]|-|\b\w|\s+/g, (match, index) => {
     if (match === ' ' || match === '-') return '';
     return index === 0 ? match.toLowerCase() : match.toUpperCase();
   });
