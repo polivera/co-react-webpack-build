@@ -72,6 +72,10 @@ const rules = {
         : 'dist/public',
     },
   },
+  images: {
+    test: /\.(png|svg|jpg|jpeg|gif)$/i,
+    type: 'asset/resource',
+  },
 };
 
 const webpackConfig = {
@@ -89,7 +93,7 @@ const webpackConfig = {
     filename: entryFileName,
   },
   module: {
-    rules: [rules.css, rules.jsx],
+    rules: [rules.css, rules.jsx, rules.images],
   },
   plugins: [
     new HtmlWebpackPlugin({ template: resolve(PUBLIC_PATH, 'index.html') }),
