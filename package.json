@@ -7,37 +7,38 @@
   },
   "environment": "development",
   "author": "Pablo Olivera <p.oliverav@gmail.com>",
+  "homepage": "https://github.com/polivera/co-react-webpack-build#readme",
   "license": "ISC",
   "dependencies": {
-    "@babel/core": "^7.14.2",
-    "@babel/preset-env": "^7.14.2",
+    "@babel/core": "^7.14.3",
+    "@babel/preset-env": "^7.14.4",
     "@babel/preset-react": "^7.13.13",
     "babel-loader": "^8.2.2",
-    "css-loader": "^5.2.4",
+    "css-loader": "^5.2.6",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.3.1",
     "prettier": "^2.3.0",
     "shelljs": "^0.8.4",
     "style-loader": "^2.0.0",
-    "webpack": "^5.37.0",
+    "webpack": "^5.38.1",
     "webpack-cli": "^4.7.0",
     "webpack-dev-server": "^3.11.2",
     "webpack-merge": "^5.7.3"
   },
   "devDependencies": {
-    "eslint": "^7.26.0",
+    "eslint": "^7.27.0",
     "eslint-config-airbnb": "^18.2.1",
-    "eslint-config-prettier": "^8.2.0",
-    "eslint-plugin-import": "^2.23.2",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-jsx-a11y": "^6.4.1",
-    "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0"
   },
   "prettier": {
     "singleQuote": true
   },
   "bin": {
-    "dev-server": "bin/run-dev-server.js",
-    "prod-server": "bin/run-prod-server.js"
+    "co-dev-server": "bin/run-dev-server.js",
+    "co-prod-server": "bin/run-prod-server.js"
   }
 }
