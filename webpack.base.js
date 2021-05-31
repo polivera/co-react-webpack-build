@@ -59,6 +59,11 @@ const rules = {
       presets: ['@babel/preset-env', '@babel/preset-react'],
     },
   },
+  tsx: {
+    test: /\.tsx?$/,
+    use: 'ts-loader',
+    exclude: /node_modules/,
+  },
   fonts: {
     test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
     loader: 'file-loader',
