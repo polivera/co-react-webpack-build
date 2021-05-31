@@ -117,4 +117,13 @@ if (fontConfig) {
   webpackConfig.module.rules = [...webpackConfig.module.rules, rules.fonts];
 }
 
+if (deps.typescript) {
+  webpackConfig.resolve.extensions = [
+    ...webpackConfig.resolve.extensions,
+    'tsx',
+    'ts',
+  ];
+  webpackConfig.module.rules = [...webpackConfig.module.rules, rules.tsx];
+}
+
 module.exports = webpackConfig;
