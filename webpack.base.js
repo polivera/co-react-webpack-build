@@ -19,6 +19,7 @@ const {
   remotes = [],
   exposes = [],
   dependencies: deps,
+  devDependencies: devDeps,
   // eslint-disable-next-line import/no-dynamic-require
 } = require(PKG_JSON_FILE);
 const ENTRY_FILE_PATH = resolve(SRC_PATH, entryFileName);
@@ -117,7 +118,7 @@ if (fontConfig) {
   webpackConfig.module.rules = [...webpackConfig.module.rules, rules.fonts];
 }
 
-if (deps.typescript) {
+if (devDeps.typescript) {
   webpackConfig.resolve.extensions = [
     ...webpackConfig.resolve.extensions,
     'tsx',
