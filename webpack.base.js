@@ -5,7 +5,6 @@ const { ModuleFederationPlugin } = require('webpack').container;
 const processPath = process.cwd();
 
 const SRC_PATH = resolve(processPath, 'src');
-const DIST_PATH = resolve(processPath, 'dist');
 const PKG_JSON_FILE = resolve(processPath, 'package.json');
 const PUBLIC_PATH = resolve(SRC_PATH, 'public');
 
@@ -95,8 +94,8 @@ const webpackConfig = {
     extensions: ['.jsx', '.js', '.json'],
   },
   output: {
-    path: DIST_PATH,
-    filename: entryFileName,
+    path: PUBLIC_PATH,
+    filename: 'index.js',
   },
   module: {
     rules: [rules.css, rules.jsx, rules.images],
@@ -118,7 +117,7 @@ if (fontConfig) {
   webpackConfig.module.rules = [...webpackConfig.module.rules, rules.fonts];
 }
 
-if (devDeps.typescript) {
+if (devDeps?.typescript) {
   webpackConfig.resolve.extensions = [
     ...webpackConfig.resolve.extensions,
     'tsx',
