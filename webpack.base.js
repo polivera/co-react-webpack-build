@@ -120,8 +120,8 @@ if (fontConfig) {
 if (devDeps?.typescript) {
   webpackConfig.resolve.extensions = [
     ...webpackConfig.resolve.extensions,
-    'tsx',
-    'ts',
+    '.tsx',
+    '.ts',
   ];
   webpackConfig.module.rules = [...webpackConfig.module.rules, rules.tsx];
 }
