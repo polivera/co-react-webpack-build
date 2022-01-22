@@ -11,7 +11,7 @@ const resultConfig = merge(base, devConfig);
 resultConfig.devServer.headers = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "*",
-  "Access-Control-Allow-Headers": "*",
+  "Access-Control-Allow-Headers": "*"
 }
 
-module.exports = merge(base, resultConfig);
+module.exports = resultConfig;
