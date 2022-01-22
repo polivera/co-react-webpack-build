@@ -93,8 +93,10 @@ const rules = {
 };
 
 const webpackConfig = {
+  mode: "none",
   context: SRC_PATH,
   entry: ENTRY_FILE_PATH,
+  devtool: "eval",
   devServer: {
     host,
     port,
