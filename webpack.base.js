@@ -1,27 +1,35 @@
-const { resolve } = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { ModuleFederationPlugin } = require('webpack').container;
+const { resolve } = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { ModuleFederationPlugin } = require("webpack").container;
 
 const processPath = process.cwd();
+const PKG_JSON_FILE = resolve(processPath, "package.json");
 
-const SRC_PATH = resolve(processPath, 'src');
-const PKG_JSON_FILE = resolve(processPath, 'package.json');
-const PUBLIC_PATH = resolve(SRC_PATH, 'public');
-
+/**
+ * Extract all the information from the package.json file
+ */
 const {
   name: packageName,
   main: entryFileName,
   fonts: fontConfig,
-  host = 'localhost',
+  sourceFolder = "./src",
+  host = "localhost",
   port = 9000,
   shared = [],
   remotes = [],
   exposes = [],
   dependencies: deps,
   devDependencies: devDeps,
-  // eslint-disable-next-line import/no-dynamic-require
+// todo: is there a better way to do this?
+// eslint-disable-next-line import/no-dynamic-require
 } = require(PKG_JSON_FILE);
+
+/**
+ * Resolve paths and stuff
+ */
+const SRC_PATH = resolve(processPath, sourceFolder);
 const ENTRY_FILE_PATH = resolve(SRC_PATH, entryFileName);
+const PUBLIC_PATH = resolve(SRC_PATH, "public");
 
 /**
  * Camelize given string
@@ -30,10 +38,16 @@ const ENTRY_FILE_PATH = resolve(SRC_PATH, entryFileName);
  */
 const camelize = (str) =>
   str.replace(/^\w|[A-Z]|-|\b\w|\s+/g, (match, index) => {
-    if (match === ' ' || match === '-') return '';
+    if (match === " " || match === "-") return "";
     return index === 0 ? match.toLowerCase() : match.toUpperCase();
   });
 const PACKAGE_NAME = camelize(packageName);
+// eslint-disable-next-line no-console
+console.info(`Package name is ${PACKAGE_NAME}`);
+// eslint-disable-next-line no-console
+console.info(
+  `Remote URL: ${PACKAGE_NAME}@http://${host}:${port}/remoteEntry.js`
+);
 
 /**
  * Add version to the shared libraries based on your dependencies
@@ -48,38 +62,38 @@ const sharedWithVersions = Object.fromEntries(
 const rules = {
   css: {
     test: /\.css$/i,
-    use: ['style-loader', 'css-loader'],
+    use: ["style-loader", "css-loader"],
   },
   jsx: {
     test: /\.jsx?$/,
     include: [SRC_PATH],
     exclude: /node_modules/,
-    loader: 'babel-loader',
+    loader: "babel-loader",
     options: {
-      presets: ['@babel/preset-env', '@babel/preset-react'],
+      presets: ["@babel/preset-env", "@babel/preset-react"],
     },
   },
   tsx: {
     test: /\.tsx?$/,
-    use: 'ts-loader',
+    loader: "ts-loader",
     exclude: /node_modules/,
   },
   fonts: {
     test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-    loader: 'file-loader',
+    loader: "file-loader",
     include: fontConfig?.include
       ? resolve(processPath, fontConfig.include)
-      : resolve(PUBLIC_PATH, 'fonts'),
+      : resolve(PUBLIC_PATH, "fonts"),
     options: {
-      name: '[name].[ext]',
+      name: "[name].[ext]",
       outputPath: fontConfig?.outputPath
         ? resolve(processPath, fontConfig.outputPath)
-        : 'dist/public',
+        : "dist/public",
     },
   },
   images: {
     test: /\.(png|svg|jpg|jpeg|gif)$/i,
-    type: 'asset/resource',
+    type: "asset/resource",
   },
 };
 
@@ -91,21 +105,20 @@ const webpackConfig = {
     port,
   },
   resolve: {
-    extensions: ['.jsx', '.js', '.json'],
+    extensions: [".jsx", ".js", ".json"],
   },
   output: {
     path: PUBLIC_PATH,
-    filename: 'index.js',
+    filename: "index.js",
   },
   module: {
     rules: [rules.css, rules.jsx, rules.images],
   },
   plugins: [
-    new HtmlWebpackPlugin({ template: resolve(PUBLIC_PATH, 'index.html') }),
+    new HtmlWebpackPlugin({ template: resolve(PUBLIC_PATH, "index.html") }),
     new ModuleFederationPlugin({
       name: PACKAGE_NAME,
-      library: { type: 'var', name: PACKAGE_NAME },
-      filename: 'remoteEntry.js',
+      filename: "remoteEntry.js",
       exposes,
       shared: sharedWithVersions,
       remotes,
@@ -120,8 +133,8 @@ if (fontConfig) {
 if (devDeps?.typescript) {
   webpackConfig.resolve.extensions = [
     ...webpackConfig.resolve.extensions,
-    '.tsx',
-    '.ts',
+    ".tsx",
+    ".ts",
   ];
   webpackConfig.module.rules = [...webpackConfig.module.rules, rules.tsx];
 }
