@@ -1,6 +1,6 @@
 {
   "name": "co-react-webpack-build",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "Webpack configuration for React apps",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
