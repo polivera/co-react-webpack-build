@@ -113,7 +113,6 @@ const webpackConfig = {
     new HtmlWebpackPlugin({ template: resolve(PUBLIC_PATH, "index.html") }),
     new ModuleFederationPlugin({
       name: PACKAGE_NAME,
-      remoteType: "var",
       filename: "remoteEntry.js",
       exposes,
       shared: sharedWithVersions,
