@@ -18,8 +18,7 @@ const {
   shared = [],
   remotes = [],
   exposes = [],
-  dependencies: deps,
-  devDependencies: devDeps,
+  dependencies: deps
 // todo: is there a better way to do this?
 // eslint-disable-next-line import/no-dynamic-require
 } = require(PKG_JSON_FILE);
@@ -65,18 +64,14 @@ const rules = {
     use: ["style-loader", "css-loader"],
   },
   jsx: {
-    test: /\.jsx?$/,
+    test: /\.(ts|tsx|js|jsx)$/,
     include: [SRC_PATH],
     exclude: /node_modules/,
     loader: "babel-loader",
     options: {
-      presets: ["@babel/preset-env", "@babel/preset-react"],
+      presets: ["@babel/preset-env", "@babel/preset-react", "@babel/preset-typescript"],
+      plugins: ["@babel/transform-runtime"]
     },
-  },
-  tsx: {
-    test: /\.tsx?$/,
-    loader: "ts-loader",
-    exclude: /node_modules/,
   },
   fonts: {
     test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
@@ -128,15 +123,6 @@ const webpackConfig = {
 
 if (fontConfig) {
   webpackConfig.module.rules = [...webpackConfig.module.rules, rules.fonts];
-}
-
-if (devDeps?.typescript) {
-  webpackConfig.resolve.extensions = [
-    ...webpackConfig.resolve.extensions,
-    ".tsx",
-    ".ts",
-  ];
-  webpackConfig.module.rules = [...webpackConfig.module.rules, rules.tsx];
 }
 
 module.exports = webpackConfig;
