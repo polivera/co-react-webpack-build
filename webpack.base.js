@@ -100,7 +100,7 @@ const webpackConfig = {
     port,
   },
   resolve: {
-    extensions: [".jsx", ".js", ".json"],
+    extensions: [".jsx", ".js", ".json", ".tsx", ".ts"],
   },
   output: {
     path: PUBLIC_PATH,
