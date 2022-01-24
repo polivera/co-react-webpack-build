@@ -10,7 +10,7 @@ const PKG_JSON_FILE = resolve(processPath, "package.json");
  */
 const {
   name: packageName,
-  main: entryFileName,
+  main: entryFileName = "index.ts",
   fonts: fontConfig,
   sourceFolder = "./src",
   host = "localhost",
@@ -41,8 +41,6 @@ const camelize = (str) =>
     return index === 0 ? match.toLowerCase() : match.toUpperCase();
   });
 const PACKAGE_NAME = camelize(packageName);
-// eslint-disable-next-line no-console
-console.info(`Package name is ${PACKAGE_NAME}`);
 // eslint-disable-next-line no-console
 console.info(
   `Remote URL: ${PACKAGE_NAME}@http://${host}:${port}/remoteEntry.js`
