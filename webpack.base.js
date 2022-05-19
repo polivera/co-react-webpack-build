@@ -29,6 +29,7 @@ const {
 const SRC_PATH = resolve(processPath, sourceFolder);
 const ENTRY_FILE_PATH = resolve(SRC_PATH, entryFileName);
 const PUBLIC_PATH = resolve(SRC_PATH, "public");
+const DIST_PATH = resolve(processPath, "./dist")
 
 /**
  * Camelize given string
@@ -72,7 +73,7 @@ const rules = {
     },
   },
   fonts: {
-    test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+    test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
     loader: "file-loader",
     include: fontConfig?.include
       ? resolve(processPath, fontConfig.include)
@@ -85,9 +86,20 @@ const rules = {
     },
   },
   images: {
-    test: /\.(png|svg|jpg|jpeg|gif)$/i,
+    test: /\.(png|jpg|jpeg|gif)$/i,
     type: "asset/resource",
   },
+  svg: {
+    test: /\.svg$/,
+    use: [
+      {
+        loader: '@svgr/webpack',
+        options: {
+          native: true,
+        },
+      },
+    ],
+  }
 };
 
 const webpackConfig = {
@@ -98,7 +110,7 @@ const webpackConfig = {
     extensions: [".jsx", ".js", ".json", ".tsx", ".ts"],
   },
   output: {
-    path: PUBLIC_PATH,
+    path: DIST_PATH,
     filename: "[name][contenthash].js",
   },
   module: {
