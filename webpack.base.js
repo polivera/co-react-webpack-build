@@ -94,23 +94,18 @@ const webpackConfig = {
   mode: "none",
   context: SRC_PATH,
   entry: ENTRY_FILE_PATH,
-  devtool: "eval",
-  devServer: {
-    host,
-    port,
-  },
   resolve: {
     extensions: [".jsx", ".js", ".json", ".tsx", ".ts"],
   },
   output: {
     path: PUBLIC_PATH,
-    filename: "index.js",
+    filename: "[name][contenthash].js",
   },
   module: {
     rules: [rules.css, rules.jsx, rules.images],
   },
   plugins: [
-    new HtmlWebpackPlugin({ template: resolve(PUBLIC_PATH, "index.html") }),
+    new HtmlWebpackPlugin({ template: resolve(processPath, "index.html") }),
     new ModuleFederationPlugin({
       name: PACKAGE_NAME,
       filename: "remoteEntry.js",
