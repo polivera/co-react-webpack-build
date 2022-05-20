@@ -29,7 +29,7 @@ const {
 const SRC_PATH = resolve(processPath, sourceFolder);
 const ENTRY_FILE_PATH = resolve(SRC_PATH, entryFileName);
 const PUBLIC_PATH = resolve(SRC_PATH, "public");
-const DIST_PATH = resolve(processPath, "./dist")
+const DIST_PATH = resolve(processPath, "./dist");
 
 /**
  * Camelize given string
@@ -95,7 +95,7 @@ const rules = {
       {
         loader: '@svgr/webpack',
         options: {
-          native: true,
+          native: false,
         },
       },
     ],
@@ -114,7 +114,7 @@ const webpackConfig = {
     filename: "[name][contenthash].js",
   },
   module: {
-    rules: [rules.css, rules.jsx, rules.images],
+    rules: [rules.css, rules.jsx, rules.images, rules.svg],
   },
   plugins: [
     new HtmlWebpackPlugin({ template: resolve(processPath, "index.html") }),
